@@ -14,7 +14,6 @@ public class ClientDTO {
     private String email;
     private Set<AccountDTO> account = new HashSet<>();
 
-
     public ClientDTO(Client client){
         id = client.getId();
         firstName = client.getFirstName();

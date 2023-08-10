@@ -7,10 +7,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import javax.persistence.Entity;
-        import javax.persistence.GeneratedValue;
-        import javax.persistence.GenerationType;
-        import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 
 @Entity
@@ -24,6 +23,17 @@ public class Client {
     private String lastName;
     private String email;
 
+    @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
+    Set<Account> account = new HashSet<>();
+    public Set<Account> getAccounts() {
+        return account;
+    }
+
+    public void addAccount(Account account) {
+        account.setOwner(this);
+        this.account.add(account);
+    }
+
     public Client() {
     }
 
@@ -31,6 +41,10 @@ public class Client {
         this.firstName = first;
         this.lastName = last;
         this.email = email;
+    }
+
+    public long getId() {
+        return id;
     }
 
     public String getFirstName() {
@@ -60,4 +74,5 @@ public class Client {
     public String toString() {
         return firstName + " " + lastName + " " + email;
     }
+
 }
